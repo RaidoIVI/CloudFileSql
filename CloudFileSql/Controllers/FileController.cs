@@ -31,8 +31,16 @@ namespace CloudFileSql.Controllers
         }
 
         [HttpPost]
-        public async Task Add(FileModel fileDescription, IFormFile file)
+        public async Task Add(FileModelCreate fileCreate)
         {
+            var fileDescription = new FileModel
+            {
+                Id = new Guid(),
+                Description = fileCreate.Description,
+                Extension = fileCreate.Extension,
+                Name = fileCreate.Name
+            };
+            var file = fileCreate.File;
             await _fileManager.Add(fileDescription,file);
         }
 
